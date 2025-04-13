@@ -3,6 +3,7 @@ package com.example.barterskill.adapters
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -67,10 +68,13 @@ class NotificationAdapter(
                             holder.binding.notificationTextView.text = message
                         }
                         "swap_accepted" -> {
-                            holder.binding.notificationTextView.text = "$senderName accepted your swap request"
-                            holder.binding.acceptButton.visibility = android.view.View.GONE
-                            holder.binding.declineButton.visibility = android.view.View.GONE
+                            val contactEmail = notification.details["contactEmail"] ?: "No email provided"
+                            holder.binding.notificationTextView.text =
+                                "$senderName accepted your swap request.\nContact them at: $contactEmail"
+                            holder.binding.acceptButton.visibility = View.GONE
+                            holder.binding.declineButton.visibility = View.GONE
                         }
+
                         "swap_declined" -> {
                             holder.binding.notificationTextView.text = "$senderName declined your swap request"
                             holder.binding.acceptButton.visibility = android.view.View.GONE

@@ -99,30 +99,41 @@ class NotificationsFragment : Fragment() {
     private fun acceptSwapRequest(notification: Notification) {
         val currentUser = firebaseAuth.currentUser ?: return
 
-        val acceptNotification = hashMapOf(
-            "type" to "swap_accepted",
-            "senderId" to currentUser.uid,
-            "recipientId" to notification.senderId,
-            "postId" to notification.postId,
-            "details" to notification.details,
-            "timestamp" to Date(),
-            "read" to false
-        )
+        firestore.collection("users").document(currentUser.uid)
+            .get()
+            .addOnSuccessListener { document ->
+                val senderEmail = document.getString("email") ?: "N/A"
+                val senderName = document.getString("name") ?: "A user"
 
-        firestore.collection("notifications")
-            .add(acceptNotification)
-            .addOnSuccessListener {
-                firestore.collection("notifications").document(notification.id)
-                    .update("processed", true)
+                val acceptNotification = hashMapOf(
+                    "type" to "swap_accepted",
+                    "senderId" to currentUser.uid,
+                    "recipientId" to notification.senderId,
+                    "postId" to notification.postId,
+                    "details" to notification.details + mapOf("contactEmail" to senderEmail, "senderName" to senderName),
+                    "timestamp" to Date(),
+                    "read" to false
+                )
+
+                firestore.collection("notifications")
+                    .add(acceptNotification)
                     .addOnSuccessListener {
-                        Toast.makeText(context, "Swap request accepted!", Toast.LENGTH_SHORT).show()
-                        loadNotifications()
+                        firestore.collection("notifications").document(notification.id)
+                            .update("processed", true)
+                            .addOnSuccessListener {
+                                Toast.makeText(context, "Swap request accepted!", Toast.LENGTH_SHORT).show()
+                                loadNotifications()
+                            }
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(context, "Error accepting request: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
             }
             .addOnFailureListener { e ->
-                Toast.makeText(context, "Error accepting request: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Failed to get user info: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
 
     private fun declineSwapRequest(notification: Notification) {
         val currentUser = firebaseAuth.currentUser ?: return

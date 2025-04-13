@@ -8,8 +8,8 @@
     <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_setting"
+        android:title="Settings"/>
 
-        android:title="setting"/>
 
     <item
         android:id="@+id/favoriteFragment"

@@ -28,4 +28,15 @@
         android:id="@+id/editProfileFragment"
         android:name="com.example.barterskill.fragments.main.EditProfileFragment"
         android:label="Edit Profile" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.barterskill.fragments.main.SettingFragment"
+        android:label="Settings"/>
+
+
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="com.example.barterskill.fragments.main.AboutUsFragment"
+        android:label="About Us" />
 </navigation>

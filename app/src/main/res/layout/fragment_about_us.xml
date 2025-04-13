@@ -29,7 +29,20 @@
                 android:textAlignment="textStart"
                 android:text="@string/about_us"/>
 
+            <TextView
+                android:id="@+id/btnGoBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="21dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_margin="50dp"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_button_background"
+                android:text="Back"/>
         </LinearLayout>
+
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

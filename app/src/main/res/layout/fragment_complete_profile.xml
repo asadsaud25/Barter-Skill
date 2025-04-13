@@ -79,7 +79,7 @@
         android:gravity="center"
         android:text="Enter your details"
         android:textColor="#000000"
-        android:textSize="14sp"
+        android:textSize="11sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivProfilePic" />
@@ -125,7 +125,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/edit_text_background"
-        android:hint="Full Name"
+        android:hint="pincode"
         android:paddingStart="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="50dp"
