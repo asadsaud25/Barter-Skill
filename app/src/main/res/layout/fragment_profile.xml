@@ -168,7 +168,6 @@
                     android:id="@+id/bio_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter"
                     android:padding="8dp"
                     android:text="Bio: Passionate about creating user-friendly applications and collaborating on innovative projects."
                     android:textAlignment="textStart"
@@ -219,7 +218,6 @@
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="21sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/skillsRecyclerView" />
