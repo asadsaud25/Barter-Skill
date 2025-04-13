@@ -1,14 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.main.SettingFragment">
+    android:background="#90DDD7">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Background Image -->
+    <ImageView
+        android:id="@+id/background_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginStart="1dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/barrrrrrrterr2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <!-- ScrollView for Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp">
+
+            <!-- Barter Skill Title -->
+            <TextView
+                android:id="@+id/title_barter_skill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="44dp"
+                android:fontFamily="@font/joti_one_regular"
+                android:gravity="center"
+                android:text="Barter Skill"
+                android:textColor="#000000"
+                android:textSize="36sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Header Rectangle -->
+            <View
+                android:id="@+id/header_rectangle"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:layout_marginTop="106dp"
+                android:background="#124C4D"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/setting_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Setting"
+                android:fontFamily="@font/inter"
+                android:textSize="24sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/header_rectangle"
+                app:layout_constraintBottom_toBottomOf="@id/header_rectangle" />
+
+            <!-- Bell Icon -->
+            <ImageView
+                android:id="@+id/bell_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_setting"
+                android:layout_marginStart="40dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/header_rectangle"
+                app:layout_constraintBottom_toBottomOf="@id/header_rectangle" />
+
+            <!-- Settings Content Container -->
+            <LinearLayout
+                android:id="@+id/settings_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header_rectangle">
+
+                <!-- About Us Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_about_us"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:backgroundTint="#124C4D"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:text="About Us"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:icon="@drawable/ic_about_us"
+                    app:iconSize="25dp"
+                    app:cornerRadius="8dp"/>
+
+                <!-- Privacy Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_privacy"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#124C4D"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:text="Privacy"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:iconSize="25dp"
+                    app:icon="@drawable/ic_privacy"
+                    app:cornerRadius="8dp"/>
+
+                <!-- Customer Support Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_customer_support"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#124C4D"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:text="Customer Support"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:cornerRadius="8dp"
+                    app:icon="@drawable/ic_customer_support"
+                    app:iconSize="25dp"/>
+
+                <!-- App Language Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_app_language"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#124C4D"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:text="App Language"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:cornerRadius="8dp"
+                    app:iconSize="25dp"
+                    app:icon="@drawable/ic_app_lang"/>
+
+                <!-- App Updates Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_app_updates"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#124C4D"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:text="App Update"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:cornerRadius="8dp"
+                    app:icon="@drawable/ic_app_update"
+                    app:iconSize="25dp"/>
+
+                <!-- Reviews and Ratings Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_reviews_ratings"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#124C4D"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:text="Review And Rating"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:cornerRadius="8dp"
+                    app:iconSize="25dp"
+                    app:icon="@drawable/ic_rating"/>
+
+                <!-- Log Out Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_log_out"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#124C4D"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:text="Logout"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:cornerRadius="8dp"
+                    app:icon="@drawable/ic_logout"
+                    app:iconSize="25dp"/>
+            </LinearLayout>
+
+            <!-- Back Button -->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
