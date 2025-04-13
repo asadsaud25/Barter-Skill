@@ -16,7 +16,6 @@ import com.example.barterskill.AuthActivity
 import com.example.barterskill.R
 import com.example.barterskill.adapters.SkillAdapter
 import com.example.barterskill.databinding.FragmentProfileBinding
-import com.example.barterskill.fragments.auth.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -49,11 +48,6 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.editProfileFragment)
         }
 
-        // Set up logout button
-//        binding.logoutButton.setOnClickListener {
-//            firebaseAuth.signOut()
-//            activity?.finish()
-//        }
         binding.logoutButton.setOnClickListener {
             firebaseAuth.signOut()
             val intent = Intent(requireContext(), AuthActivity::class.java)

@@ -11,9 +11,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -29,14 +26,6 @@ class EditProfileFragment : Fragment() {
 
     private lateinit var _binding: FragmentEditProfileBinding
     private val binding get() = _binding
-
-//    private lateinit var profileImageView: ImageView
-//    private lateinit var nameEditText: EditText
-//    private lateinit var cityEditText: EditText
-//    private lateinit var phoneEditText: EditText
-//    private lateinit var skillsEditText: EditText
-//    private lateinit var saveButton: Button
-//    private lateinit var changePhotoButton: Button
 
     private var imageUri: Uri? = null
 
@@ -64,18 +53,8 @@ class EditProfileFragment : Fragment() {
     ): View? {
         _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
 
-//        profileImageView = view.findViewById(R.id.editProfileImageView)
-//        nameEditText = view.findViewById(R.id.nameEditText)
-//        cityEditText = view.findViewById(R.id.cityEditText)
-//        phoneEditText = view.findViewById(R.id.phoneEditText)
-//        skillsEditText = view.findViewById(R.id.skillsEditText)
-//        saveButton = view.findViewById(R.id.saveButton)
-//        changePhotoButton = view.findViewById(R.id.changePhotoButton)
-
-        // Load current user data
         loadUserData()
 
-        // Set up change photo button
         binding.changePhotoButton.setOnClickListener {
             openImageChooser()
         }

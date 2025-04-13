@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -26,6 +27,8 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
         setContentView(binding.root)
 
         val navHostFragment = supportFragmentManager
@@ -34,9 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setupWithNavController(navController)
 
-        binding.fab.setOnClickListener {
-            navController.navigate(R.id.createPostFragment)
-        }
+//        binding.fab.setOnClickListener {
+//            navController.navigate(R.id.createPostFragment)
+//        }
     }
 
 

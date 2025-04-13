@@ -66,14 +66,14 @@ class CompleteProfileFragment : Fragment() {
             openImagePicker()
         }
 
-        binding.btnComplete.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             val name = binding.etName.text.toString().trim()
-            val city = binding.etCity.text.toString().trim()
+            val fullAddress = binding.etfulladdr.text.toString().trim()
             val skills = binding.etSkills.text.toString().trim()
-            val phone = binding.etPhone.text.toString().trim()
+            val pincode = binding.etpincode.text.toString().trim()
 
-            if (validateInput(name, city, skills)) {
-                completeUserProfile(name, city, skills, phone)
+            if (validateInput(name, fullAddress, skills)) {
+                completeUserProfile(name, fullAddress, skills, pincode)
             }
         }
     }
@@ -83,14 +83,14 @@ class CompleteProfileFragment : Fragment() {
         pickImageLauncher.launch(intent)
     }
 
-    private fun validateInput(name: String, city: String, skills: String): Boolean {
+    private fun validateInput(name: String, fullAddress: String, skills: String): Boolean {
         if (name.isEmpty()) {
             binding.etName.error = "Name is required"
             return false
         }
 
-        if (city.isEmpty()) {
-            binding.etCity.error = "City is required"
+        if (fullAddress.isEmpty()) {
+            binding.etfulladdr.error = "full address is required"
             return false
         }
 
@@ -102,7 +102,7 @@ class CompleteProfileFragment : Fragment() {
         return true
     }
 
-    private fun completeUserProfile(name: String, city: String, skills: String, phone: String) {
+    private fun completeUserProfile(name: String, fullAddress: String, skills: String, pincode: String) {
         binding.progressBar.visibility = View.VISIBLE
         val currentUser = auth.currentUser
 
@@ -123,10 +123,10 @@ class CompleteProfileFragment : Fragment() {
             id = userId,
             name = name,
             email = userEmail,
-            city = city,
+            fullAddress = fullAddress,
             skills = skillsList,
             base64ProfileImage = base64Image,
-            phone = phone
+            etpincode = pincode
         )
 
         saveUserToFirestore(user)
