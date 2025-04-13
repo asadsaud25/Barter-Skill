@@ -2,4 +2,13 @@
     <string name="app_name">Barter Skill</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="about_us">
+    Welcome to Barter Skill, a platform designed to empower communities by turning skills into shared opportunities. We are a team of three passionate pre-final year BCA students from Aligarh Muslim University (AMU)—ACB, XYZ, and PQR—united by a vision to create meaningful change through technology.\n\n
+    Our Story\n
+    Barter Skill was born during a hackathon themed around "Community Empowerment," where we saw an opportunity to reimagine the age-old concept of bartering for the digital age. As students at AMU, we’ve witnessed the incredible diversity of talents within our campus—coders, artists, musicians, and educators, all brimming with skills that could uplift others. Yet, we also noticed barriers like financial constraints or lack of access preventing people from sharing or learning these skills. Inspired to bridge this gap, we poured our coding expertise, creativity, and determination into building Barter Skill—a mobile app that lets anyone trade their skills for free, fostering collaboration and growth.\n
+    Working late nights in AMU’s computer labs, we combined our strengths: ACB’s knack for intuitive UI/UX design, XYZ’s prowess in backend development, and PQR’s talent for system optimization. The hackathon was more than a competition; it was a chance to craft a solution that could resonate with our peers in Aligarh and communities worldwide. What started as a project became our mission to make knowledge and services accessible to all.\n\n
+    Our Mission\n
+    At Barter Skill, we believe everyone has something valuable to offer. Our mission is to create a vibrant, inclusive platform where skills become the currency of empowerment. Whether you’re a student wanting to learn graphic design, a professional offering language lessons, or a hobbyist sharing cooking tips, Barter Skill connects you with others eager to exchange expertise. By removing financial barriers, we aim to build stronger, more connected communities where learning and collaboration thrive.\n\n
+    </string>
 </resources>
