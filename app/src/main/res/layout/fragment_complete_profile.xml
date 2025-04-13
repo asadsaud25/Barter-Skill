@@ -107,11 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/edit_text_background"
-<<<<<<< HEAD
         android:hint="Full Address"
-=======
-        android:hint="Full Name"
->>>>>>> 1019668a6b739eb9a52a7f703781a0c7b20b13d6
         android:paddingStart="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="50dp"
@@ -146,11 +142,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/edit_text_background"
-<<<<<<< HEAD
         android:hint="Skills (Comma seperated)"
-=======
-        android:hint="Full Name"
->>>>>>> 1019668a6b739eb9a52a7f703781a0c7b20b13d6
         android:paddingStart="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="50dp"
@@ -184,7 +176,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.44" />
 
-<<<<<<< HEAD
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
@@ -197,6 +188,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-=======
->>>>>>> 1019668a6b739eb9a52a7f703781a0c7b20b13d6
 </androidx.constraintlayout.widget.ConstraintLayout>

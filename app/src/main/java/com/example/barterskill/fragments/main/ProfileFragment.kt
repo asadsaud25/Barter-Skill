@@ -1,6 +1,5 @@
 package com.example.barterskill.fragments.main
 
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
@@ -12,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.barterskill.AuthActivity
 import com.example.barterskill.R
 import com.example.barterskill.adapters.SkillAdapter
 import com.example.barterskill.databinding.FragmentProfileBinding
@@ -48,13 +46,6 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.editProfileFragment)
         }
 
-        binding.logoutButton.setOnClickListener {
-            firebaseAuth.signOut()
-            val intent = Intent(requireContext(), AuthActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
-
 
         loadUserProfile()
     }
@@ -71,9 +62,10 @@ class ProfileFragment : Fragment() {
             .get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
-                    binding.nameTextView.text = document.getString("name")
-                    binding.emailTextView.text = document.getString("email")
-                    binding.cityTextView.text = document.getString("city")
+                    binding.etName.text = document.getString("name")
+                    binding.etEmail.text = document.getString("email")
+                    binding.etfulladdr.text = document.getString("address")
+                    binding.etpincode.text = document.getString("pincode")
 
                     val base64Image = document.getString("base64ProfileImage")
                     if (!base64Image.isNullOrEmpty()) {
@@ -84,18 +76,18 @@ class ProfileFragment : Fragment() {
                                 .load(bitmap)
                                 .circleCrop()
                                 .placeholder(R.drawable.ic_profile)
-                                .into(binding.profileImageView)
+                                .into(binding.ivProfilePic)
                         } catch (e: Exception) {
                             Glide.with(this)
                                 .load(R.drawable.ic_profile)
                                 .circleCrop()
-                                .into(binding.profileImageView)
+                                .into(binding.ivProfilePic)
                         }
                     } else {
                         Glide.with(this)
                             .load(R.drawable.ic_profile)
                             .circleCrop()
-                            .into(binding.profileImageView)
+                            .into(binding.ivProfilePic)
                     }
 
                     val skills = document.get("skills") as? List<String>

@@ -9,5 +9,5 @@ data class User(
     val rating: Float = 0f,
     val base64ProfileImage: String? = null,
     val fullAddress: String,
-    val etpincode: String
+    val pincode: String
 )

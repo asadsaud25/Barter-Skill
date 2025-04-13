@@ -126,7 +126,7 @@ class CompleteProfileFragment : Fragment() {
             fullAddress = fullAddress,
             skills = skillsList,
             base64ProfileImage = base64Image,
-            etpincode = pincode
+            pincode = pincode
         )
 
         saveUserToFirestore(user)
