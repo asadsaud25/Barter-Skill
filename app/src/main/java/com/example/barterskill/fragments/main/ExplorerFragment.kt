@@ -4,17 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.barterskill.R
 import com.example.barterskill.adapters.PostAdapter
+import com.example.barterskill.databinding.FragmentExplorerBinding
 import com.example.barterskill.models.Post
-import com.example.barterskill.models.Notification
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -22,10 +19,11 @@ import java.util.*
 
 class ExplorerFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var searchView: SearchView
-    private lateinit var postAdapter: PostAdapter
+    private var _binding: FragmentExplorerBinding? = null
+    private val binding get() = _binding!!
+
     private val postsList = mutableListOf<Post>()
+    private lateinit var postAdapter: PostAdapter
 
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -33,21 +31,23 @@ class ExplorerFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_explorer, container, false)
+    ): View {
+        _binding = FragmentExplorerBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        recyclerView = view.findViewById(R.id.recyclerViewPosts)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        // Initialize the adapter
+        // Setup RecyclerView
+        binding.recyclerViewPosts.layoutManager = LinearLayoutManager(context)
         postAdapter = PostAdapter(postsList) { post ->
             sendSwapRequest(post)
         }
-        recyclerView.adapter = postAdapter
+        binding.recyclerViewPosts.adapter = postAdapter
 
         // Setup search functionality
-        searchView = view.findViewById(R.id.searchView)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrBlank()) {
                     searchPosts(query)
@@ -63,24 +63,23 @@ class ExplorerFragment : Fragment() {
             }
         })
 
+
         // FAB to create a new post
-        val fabCreatePost = view.findViewById<FloatingActionButton>(R.id.fabCreatePost)
-        fabCreatePost.setOnClickListener {
+        binding.fabCreatePost.setOnClickListener {
             findNavController().navigate(R.id.createPostFragment)
         }
 
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         loadPosts()
     }
 
     override fun onResume() {
         super.onResume()
-        // Reload posts when returning to this fragment
         loadPosts()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun loadPosts() {
@@ -101,8 +100,6 @@ class ExplorerFragment : Fragment() {
     }
 
     private fun searchPosts(query: String) {
-        // This is a simple search - in a real app, you might want to use Firestore queries
-        // or a more sophisticated search method
         firestore.collection("posts")
             .orderBy("timestamp", Query.Direction.DESCENDING)
             .get()
@@ -110,8 +107,6 @@ class ExplorerFragment : Fragment() {
                 postsList.clear()
                 for (document in documents) {
                     val post = document.toObject(Post::class.java).copy(id = document.id)
-
-                    // Check if query matches any of the post fields
                     if (post.title.contains(query, ignoreCase = true) ||
                         post.description.contains(query, ignoreCase = true) ||
                         post.offerSkill.contains(query, ignoreCase = true) ||
@@ -129,20 +124,16 @@ class ExplorerFragment : Fragment() {
     private fun sendSwapRequest(post: Post) {
         val currentUser = auth.currentUser ?: return
 
-        // Check if the user is trying to swap with their own post
         if (post.userId == currentUser.uid) {
             Toast.makeText(context, "You cannot swap with your own post", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Get current user's skills to include in notification
         firestore.collection("users").document(currentUser.uid)
             .get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
                     val currentUserName = document.getString("name") ?: "A user"
-
-                    // Create notification
                     val notification = hashMapOf(
                         "type" to "swap_request",
                         "senderId" to currentUser.uid,
@@ -157,7 +148,6 @@ class ExplorerFragment : Fragment() {
                         "read" to false
                     )
 
-                    // Save notification to Firestore
                     firestore.collection("notifications")
                         .add(notification)
                         .addOnSuccessListener {

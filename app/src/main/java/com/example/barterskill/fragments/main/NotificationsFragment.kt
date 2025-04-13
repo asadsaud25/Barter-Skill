@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.barterskill.R
 import com.example.barterskill.adapters.NotificationAdapter
+import com.example.barterskill.databinding.FragmentNotificationsBinding
 import com.example.barterskill.models.Notification
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,10 +17,11 @@ import java.util.*
 
 class NotificationsFragment : Fragment() {
 
-    private lateinit var notificationsRecyclerView: RecyclerView
-    private lateinit var emptyText: TextView
-    private lateinit var notificationAdapter: NotificationAdapter
+    private var _binding: FragmentNotificationsBinding? = null
+    private val binding get() = _binding!!
+
     private val notificationsList = mutableListOf<Notification>()
+    private lateinit var notificationAdapter: NotificationAdapter
 
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val firestore = FirebaseFirestore.getInstance()
@@ -30,33 +29,34 @@ class NotificationsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_notifications, container, false)
+    ): View {
+        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        notificationsRecyclerView = view.findViewById(R.id.notificationsRecyclerView)
-        emptyText = view.findViewById(R.id.emptyNotificationsText)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        notificationsRecyclerView.layoutManager = LinearLayoutManager(context)
-
-        // Initialize adapter
+        // Setup RecyclerView
+        binding.notificationsRecyclerView.layoutManager = LinearLayoutManager(context)
         notificationAdapter = NotificationAdapter(
             notificationsList,
             { notification -> acceptSwapRequest(notification) },
             { notification -> declineSwapRequest(notification) }
         )
-        notificationsRecyclerView.adapter = notificationAdapter
+        binding.notificationsRecyclerView.adapter = notificationAdapter
 
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         loadNotifications()
     }
 
     override fun onResume() {
         super.onResume()
         loadNotifications()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun loadNotifications() {
@@ -70,11 +70,11 @@ class NotificationsFragment : Fragment() {
                 notificationsList.clear()
 
                 if (documents.isEmpty) {
-                    emptyText.visibility = View.VISIBLE
-                    notificationsRecyclerView.visibility = View.GONE
+                    binding.emptyNotificationsText.visibility = View.VISIBLE
+                    binding.notificationsRecyclerView.visibility = View.GONE
                 } else {
-                    emptyText.visibility = View.GONE
-                    notificationsRecyclerView.visibility = View.VISIBLE
+                    binding.emptyNotificationsText.visibility = View.GONE
+                    binding.notificationsRecyclerView.visibility = View.VISIBLE
 
                     for (document in documents) {
                         val notification = document.toObject(Notification::class.java).copy(id = document.id)
@@ -84,7 +84,6 @@ class NotificationsFragment : Fragment() {
 
                 notificationAdapter.notifyDataSetChanged()
 
-                // Mark notifications as read
                 for (document in documents) {
                     if (document.getBoolean("read") == false) {
                         firestore.collection("notifications").document(document.id)
@@ -100,7 +99,6 @@ class NotificationsFragment : Fragment() {
     private fun acceptSwapRequest(notification: Notification) {
         val currentUser = firebaseAuth.currentUser ?: return
 
-        // Create a notification for the sender that their request was accepted
         val acceptNotification = hashMapOf(
             "type" to "swap_accepted",
             "senderId" to currentUser.uid,
@@ -114,7 +112,6 @@ class NotificationsFragment : Fragment() {
         firestore.collection("notifications")
             .add(acceptNotification)
             .addOnSuccessListener {
-                // Update the original notification as processed
                 firestore.collection("notifications").document(notification.id)
                     .update("processed", true)
                     .addOnSuccessListener {
@@ -130,7 +127,6 @@ class NotificationsFragment : Fragment() {
     private fun declineSwapRequest(notification: Notification) {
         val currentUser = firebaseAuth.currentUser ?: return
 
-        // Create a notification for the sender that their request was declined
         val declineNotification = hashMapOf(
             "type" to "swap_declined",
             "senderId" to currentUser.uid,
@@ -144,7 +140,6 @@ class NotificationsFragment : Fragment() {
         firestore.collection("notifications")
             .add(declineNotification)
             .addOnSuccessListener {
-                // Update the original notification as processed
                 firestore.collection("notifications").document(notification.id)
                     .update("processed", true)
                     .addOnSuccessListener {

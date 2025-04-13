@@ -3,14 +3,11 @@ package com.example.barterskill.adapters
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.barterskill.R
+import com.example.barterskill.databinding.ItemNotificationBinding
 import com.example.barterskill.models.Notification
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
@@ -24,18 +21,15 @@ class NotificationAdapter(
 
     private val firestore = FirebaseFirestore.getInstance()
 
-    class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val userImageView: ImageView = itemView.findViewById(R.id.notificationUserImageView)
-        val notificationTextView: TextView = itemView.findViewById(R.id.notificationTextView)
-        val timeTextView: TextView = itemView.findViewById(R.id.notificationTimeTextView)
-        val acceptButton: Button = itemView.findViewById(R.id.acceptButton)
-        val declineButton: Button = itemView.findViewById(R.id.declineButton)
-    }
+    class NotificationViewHolder(
+        val binding: ItemNotificationBinding
+    ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_notification, parent, false)
-        return NotificationViewHolder(view)
+        val binding = ItemNotificationBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return NotificationViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
@@ -57,47 +51,45 @@ class NotificationAdapter(
                                 .load(bitmap)
                                 .circleCrop()
                                 .placeholder(R.drawable.ic_profile)
-                                .into(holder.userImageView)
-
-                        }catch (e: Exception) {
+                                .into(holder.binding.notificationUserImageView)
+                        } catch (e: Exception) {
                             Glide.with(holder.itemView.context)
                                 .load(R.drawable.ic_profile)
                                 .circleCrop()
-                                .into(holder.userImageView)
+                                .into(holder.binding.notificationUserImageView)
                         }
                     }
+
                     // Format the notification message based on type
                     when (notification.type) {
                         "swap_request" -> {
                             val message = "$senderName wants to swap ${notification.details["senderSkill"]} for ${notification.details["recipientSkill"]}"
-                            holder.notificationTextView.text = message
+                            holder.binding.notificationTextView.text = message
                         }
                         "swap_accepted" -> {
-                            holder.notificationTextView.text = "$senderName accepted your swap request"
-                            holder.acceptButton.visibility = View.GONE
-                            holder.declineButton.visibility = View.GONE
+                            holder.binding.notificationTextView.text = "$senderName accepted your swap request"
+                            holder.binding.acceptButton.visibility = android.view.View.GONE
+                            holder.binding.declineButton.visibility = android.view.View.GONE
                         }
                         "swap_declined" -> {
-                            holder.notificationTextView.text = "$senderName declined your swap request"
-                            holder.acceptButton.visibility = View.GONE
-                            holder.declineButton.visibility = View.GONE
+                            holder.binding.notificationTextView.text = "$senderName declined your swap request"
+                            holder.binding.acceptButton.visibility = android.view.View.GONE
+                            holder.binding.declineButton.visibility = android.view.View.GONE
                         }
-
                     }
                 }
             }
 
         // Format timestamp
         val sdf = SimpleDateFormat("dd MMM, HH:mm", Locale.getDefault())
-        holder.timeTextView.text = sdf.format(notification.timestamp)
+        holder.binding.notificationTimeTextView.text = sdf.format(notification.timestamp)
 
         // Handle button clicks
         if (notification.type == "swap_request") {
-            holder.acceptButton.setOnClickListener {
+            holder.binding.acceptButton.setOnClickListener {
                 onAcceptClickListener(notification)
             }
-
-            holder.declineButton.setOnClickListener {
+            holder.binding.declineButton.setOnClickListener {
                 onDeclineClickListener(notification)
             }
         }

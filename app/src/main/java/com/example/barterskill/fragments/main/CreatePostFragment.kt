@@ -10,17 +10,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.barterskill.R
+import com.example.barterskill.databinding.FragmentCreatePostBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
 class CreatePostFragment : Fragment() {
 
-    private lateinit var titleEditText: EditText
-    private lateinit var descriptionEditText: EditText
-    private lateinit var offerSkillEditText: EditText
-    private lateinit var wantSkillEditText: EditText
-    private lateinit var postButton: Button
+    private lateinit var _binding: FragmentCreatePostBinding
+    private val binding get() = _binding!!
 
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val firestore = FirebaseFirestore.getInstance()
@@ -29,27 +27,21 @@ class CreatePostFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_create_post, container, false)
+        _binding = FragmentCreatePostBinding.inflate(inflater, container, false)
 
-        titleEditText = view.findViewById(R.id.titleEditText)
-        descriptionEditText = view.findViewById(R.id.descriptionEditText)
-        offerSkillEditText = view.findViewById(R.id.offerSkillEditText)
-        wantSkillEditText = view.findViewById(R.id.wantSkillEditText)
-        postButton = view.findViewById(R.id.postButton)
-
-        postButton.setOnClickListener {
+        binding.postButton.setOnClickListener {
             createPost()
         }
 
-        return view
+        return binding.root
     }
 
     private fun createPost() {
         val userId = firebaseAuth.currentUser?.uid ?: return
-        val title = titleEditText.text.toString().trim()
-        val description = descriptionEditText.text.toString().trim()
-        val offerSkill = offerSkillEditText.text.toString().trim()
-        val wantSkill = wantSkillEditText.text.toString().trim()
+        val title = binding.titleEditText.text.toString().trim()
+        val description = binding.descriptionEditText.text.toString().trim()
+        val offerSkill = binding.offerSkillEditText.text.toString().trim()
+        val wantSkill = binding.wantSkillEditText.text.toString().trim()
 
         if (title.isBlank() || description.isBlank() || offerSkill.isBlank() || wantSkill.isBlank()) {
             Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()

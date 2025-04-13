@@ -20,19 +20,23 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.barterskill.R
+import com.example.barterskill.databinding.FragmentEditProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.io.InputStream
 
 class EditProfileFragment : Fragment() {
 
-    private lateinit var profileImageView: ImageView
-    private lateinit var nameEditText: EditText
-    private lateinit var cityEditText: EditText
-    private lateinit var phoneEditText: EditText
-    private lateinit var skillsEditText: EditText
-    private lateinit var saveButton: Button
-    private lateinit var changePhotoButton: Button
+    private lateinit var _binding: FragmentEditProfileBinding
+    private val binding get() = _binding
+
+//    private lateinit var profileImageView: ImageView
+//    private lateinit var nameEditText: EditText
+//    private lateinit var cityEditText: EditText
+//    private lateinit var phoneEditText: EditText
+//    private lateinit var skillsEditText: EditText
+//    private lateinit var saveButton: Button
+//    private lateinit var changePhotoButton: Button
 
     private var imageUri: Uri? = null
 
@@ -49,7 +53,7 @@ class EditProfileFragment : Fragment() {
                     .load(uri)
                     .circleCrop()
                     .placeholder(R.drawable.ic_profile)
-                    .into(profileImageView)
+                    .into(binding.editProfileImageView)
             }
         }
     }
@@ -58,30 +62,30 @@ class EditProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_edit_profile, container, false)
+        _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
 
-        profileImageView = view.findViewById(R.id.editProfileImageView)
-        nameEditText = view.findViewById(R.id.nameEditText)
-        cityEditText = view.findViewById(R.id.cityEditText)
-        phoneEditText = view.findViewById(R.id.phoneEditText)
-        skillsEditText = view.findViewById(R.id.skillsEditText)
-        saveButton = view.findViewById(R.id.saveButton)
-        changePhotoButton = view.findViewById(R.id.changePhotoButton)
+//        profileImageView = view.findViewById(R.id.editProfileImageView)
+//        nameEditText = view.findViewById(R.id.nameEditText)
+//        cityEditText = view.findViewById(R.id.cityEditText)
+//        phoneEditText = view.findViewById(R.id.phoneEditText)
+//        skillsEditText = view.findViewById(R.id.skillsEditText)
+//        saveButton = view.findViewById(R.id.saveButton)
+//        changePhotoButton = view.findViewById(R.id.changePhotoButton)
 
         // Load current user data
         loadUserData()
 
         // Set up change photo button
-        changePhotoButton.setOnClickListener {
+        binding.changePhotoButton.setOnClickListener {
             openImageChooser()
         }
 
         // Set up save button
-        saveButton.setOnClickListener {
+        binding.saveButton.setOnClickListener {
             saveUserData()
         }
 
-        return view
+        return binding.root
     }
 
     private fun loadUserData() {
@@ -91,13 +95,13 @@ class EditProfileFragment : Fragment() {
             .get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
-                    nameEditText.setText(document.getString("name"))
-                    cityEditText.setText(document.getString("city"))
-                    phoneEditText.setText(document.getString("phone"))
+                    binding.nameEditText.setText(document.getString("name"))
+                    binding.cityEditText.setText(document.getString("city"))
+                    binding.phoneEditText.setText(document.getString("phone"))
 
                     val skills = document.get("skills") as? List<String>
                     if (!skills.isNullOrEmpty()) {
-                        skillsEditText.setText(skills.joinToString(", "))
+                        binding.skillsEditText.setText(skills.joinToString(", "))
                     }
 
                     // Load Base64 profile image
@@ -110,18 +114,18 @@ class EditProfileFragment : Fragment() {
                                 .load(bitmap)
                                 .circleCrop()
                                 .placeholder(R.drawable.ic_profile)
-                                .into(profileImageView)
+                                .into(binding.editProfileImageView)
                         } catch (e: Exception) {
                             Glide.with(this)
                                 .load(R.drawable.ic_profile)
                                 .circleCrop()
-                                .into(profileImageView)
+                                .into(binding.editProfileImageView)
                         }
                     } else {
                         Glide.with(this)
                             .load(R.drawable.ic_profile)
                             .circleCrop()
-                            .into(profileImageView)
+                            .into(binding.editProfileImageView)
                     }
                 }
             }
@@ -132,16 +136,16 @@ class EditProfileFragment : Fragment() {
 
     private fun saveUserData() {
         val userId = firebaseAuth.currentUser?.uid ?: return
-        val name = nameEditText.text.toString().trim()
-        val city = cityEditText.text.toString().trim()
-        val phone = phoneEditText.text.toString().trim()
+        val name = binding.nameEditText.text.toString().trim()
+        val city = binding.cityEditText.text.toString().trim()
+        val phone = binding.phoneEditText.text.toString().trim()
 
         // Parse skills string into list
-        val skillsString = skillsEditText.text.toString().trim()
+        val skillsString = binding.skillsEditText.text.toString().trim()
         val skillsList = skillsString.split(",").map { it.trim() }.filter { it.isNotEmpty() }
 
         if (name.isEmpty()) {
-            nameEditText.error = "Name cannot be empty"
+            binding.nameEditText.error = "Name cannot be empty"
             return
         }
 

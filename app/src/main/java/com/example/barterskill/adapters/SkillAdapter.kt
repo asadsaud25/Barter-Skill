@@ -1,27 +1,26 @@
 package com.example.barterskill.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.barterskill.R
+import com.example.barterskill.databinding.ItemSkillBinding
 
 class SkillAdapter(private val skills: List<String>) :
     RecyclerView.Adapter<SkillAdapter.SkillViewHolder>() {
 
-    class SkillViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val skillTextView: TextView = itemView.findViewById(R.id.skillTextView)
-    }
+    class SkillViewHolder(
+        val binding: ItemSkillBinding
+    ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_skill, parent, false)
-        return SkillViewHolder(view)
+        val binding = ItemSkillBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return SkillViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: SkillViewHolder, position: Int) {
-        holder.skillTextView.text = skills[position]
+        holder.binding.skillTextView.text = skills[position]
     }
 
     override fun getItemCount(): Int = skills.size
