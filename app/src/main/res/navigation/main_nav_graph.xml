@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/explorerFragment">
+
+    <fragment
+        android:id="@+id/explorerFragment"
+        android:name="com.example.barterskill.fragments.main.ExplorerFragment"
+        android:label="Explore" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.barterskill.fragments.main.ProfileFragment"
+        android:label="Profile" />
+
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.example.barterskill.fragments.main.NotificationsFragment"
+        android:label="Notifications" />
+
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="com.example.barterskill.fragments.main.CreatePostFragment"
+        android:label="Create Post" />
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.barterskill.fragments.main.EditProfileFragment"
+        android:label="Edit Profile" />
+</navigation>
