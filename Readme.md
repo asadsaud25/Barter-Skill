@@ -13,7 +13,7 @@ This project was built for the **Software Hackathon of AMU Hacks 4.0**—a platf
 ## 👥 Team
 
 This project was created by teaming up with my friends:
-- **Ryan Khan**
+- **Asad Saud**
 - **Efa Arif**
 - **Homa Mahmood**
 
