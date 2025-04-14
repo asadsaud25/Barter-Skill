@@ -4,6 +4,21 @@
 
 ---
 
+## 🎯 Purpose
+
+This project was built for the **Software Hackathon of AMU Hacks 4.0**—a platform where creativity meets purpose. The app was designed and developed as a real-world solution to promote **collaborative learning** and **mutual growth**.
+
+---
+
+## 👥 Team
+
+This project was created by teaming up with my friends:
+- **Ryan Khan**
+- **Efa Arif**
+- **Homa Mahmood**
+
+---
+
 ## 🚀 Features
 
 ### 🔐 Authentication
@@ -83,8 +98,11 @@ The app layout is inspired by a clean and intuitive design in **Figma**. Transla
 3. Connect Firebase project (or use existing google-services.json)
 4. Build and run on an emulator or physical device
 
-##🙌 Contributions
+## 🙌 Contributions
 Pull requests are welcome. For major changes, please open an issue first to discuss what you'd like to change.
+
+## 📦 APK for Testing
+👉 Download Barter Skill APK for testing: [barter-skill.apk](app-debug.apk)
 
 ## 📄 License
 This project is licensed under the MIT License - [MIT LICENSE](LICENSE.md)
